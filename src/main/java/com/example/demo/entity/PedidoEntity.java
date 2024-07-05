@@ -1,12 +1,16 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
+import java.time.LocalDate;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,32 +19,24 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "tb_producto")
+@Table(name = "tb_pedido")
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class ProductoEntity {
+public class PedidoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "producto_id")
-    private Integer productoId;
+    private Long pedidoId;
 
-    @Column(name = "nombre")
-    private String nombre;
-
-    @Column(name = "stock")
-    private Integer stock;
-
-    @Column(name = "precio")
-    private Double precio;
-
-    @Column(name = "url_imagen")
-    private String urlImagen;
+    private LocalDate fechaCompra;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private CategoriaEntity categoria;
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private UsuarioEntity usuarioEntity;
+
+    @OneToMany(mappedBy = "pedidoEntity", cascade = CascadeType.ALL)
+    private List<DetallePedidoEntity> detalleMedicamento;
 }

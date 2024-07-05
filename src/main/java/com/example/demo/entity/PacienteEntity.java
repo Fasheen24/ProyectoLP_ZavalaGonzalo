@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,32 +13,31 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "tb_producto")
+@Table(name = "tb_paciente")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProductoEntity {
+public class PacienteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "producto_id")
-    private Integer productoId;
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "correo")
+    private String correo;
 
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "stock")
-    private Integer stock;
+    @Column(name = "celular")
+    private String celular;
 
-    @Column(name = "precio")
-    private Double precio;
+    @Column(name = "dni")
+    private String dni; 
 
-    @Column(name = "url_imagen")
-    private String urlImagen;
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private CategoriaEntity categoria;
+    @Column(name = "nro_historia")
+    private Integer nroHistoria; 
 }

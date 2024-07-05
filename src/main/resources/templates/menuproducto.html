@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Navbar Example</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            color: #333;
+            margin-left: 20px;
+        }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            min-width: 18px;
+            text-align: center;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-img-top {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            object-fit: cover;
+            height: 200px;
+        }
+        .modal-lg {
+            max-width: 90%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" th:href="@{/menu}">Productos</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <img th:src="${'/usuario_foto/' + foto}" alt="Profile" class="profile-pic ml-2">
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-outline-danger ml-2" th:href="@{/logout}" role="button">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-outline-primary ml-2" th:href="@{/registrar_producto}" role="button">Registrar Producto</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-link cart-icon" data-toggle="modal" data-target="#exampleModal">
+                    <i class="bi bi-cart3"></i>
+                    <span th:text="${cant_carrito}" class="cart-badge"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-lg-4 col-md-6 mb-4" th:each="producto: ${productos}">
+            <div class="card">
+                <img th:src="${producto.urlImagen}" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <form th:action="@{/agregar_producto}" th:object="${pedido}" method="post">
+                        <h5 class="card-title" th:text="${producto.nombre}"></h5>
+                        <p class="card-text">
+                            <strong>Precio:</strong> S/<span th:text="${producto.precio}"></span><br>
+                            <strong>Cantidad:</strong> <span th:text="${producto.stock}"></span> unidades
+                        </p>
+                        <input required name="cant" placeholder="Ingrese cantidad" class="form-control mb-3" type="number">
+                        <input name="prodId" type="hidden" th:value="${producto.productoId}">
+                        <button type="submit" class="btn btn-primary btn-block">Agregar +</button>
+                    </form>
+                    <div class="d-flex justify-content-between mt-3">
+                        <a class="btn btn-sm btn-primary" th:href="@{/editar_producto/{id}(id=${producto.productoId})}">Editar</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/eliminar_producto/{id}(id=${producto.productoId})}">Eliminar</a>
+                        <a class="btn btn-sm btn-info" th:href="@{/buscar/{id}(id=${producto.productoId})}">Detalle</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Carrito de compras</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="text-right mr-4">
+                <a target="_blank" th:href="@{/generar_pdf}" class="btn btn-info mt-3">Generar PDF</a>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Subtotal</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="ped: ${carrito}">
+                            <td th:text="${ped.productoEntity.productoId}"></td>
+                            <td><img width="50px" height="50px" th:src="${ped.productoEntity.urlImagen}" alt=""></td>
+                            <td th:text="${ped.productoEntity.nombre}"></td>
+                            <td th:text="'S/' + ${ped.productoEntity.precio}"></td>
+                            <td th:text="${ped.cantidad}"></td>
+                            <td th:text="'S/' + ${ped.cantidad * ped.productoEntity.precio}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <b><span th:text="'Total: S/' + ${total}"></span></b>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a th:href="@{/guardar_factura}" class="btn btn-primary">Guardar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

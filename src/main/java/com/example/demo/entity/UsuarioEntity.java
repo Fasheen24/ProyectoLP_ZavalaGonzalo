@@ -11,20 +11,27 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="tb_usuario")
+@Table(name = "tb_usuario")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class UsuarioEntity {
-	@Id
-	@Column(name="correo")
-	private String correo;
-	@Column(name="nombre")
-	private String nombre;
-	@Column(name="celular")
-	private String celular;
-	@Column(name="password")
-	private String password;
+
+    @Id
+    @Column(name = "correo")
+    private String correo;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "celular")
+    private String celular;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "url_imagen")
+    private String urlImagen;
 }
