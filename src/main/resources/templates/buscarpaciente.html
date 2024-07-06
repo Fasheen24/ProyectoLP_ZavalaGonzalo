@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('URL_DE_TU_IMAGEN_DE_FONDO'); /* Cambia 'URL_DE_TU_IMAGEN_DE_FONDO' por la URL de tu imagen */
+            background-image: url('https://images.pexels.com/photos/3945609/pexels-photo-3945609.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); /* Cambia 'URL_DE_TU_IMAGEN_DE_FONDO' por la URL de tu imagen */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -17,21 +17,25 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
         .container {
             background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
         .detail-container {
-            background-color: #f8f9fa;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        h2, h3 {
+        h2 {
             color: #4CAF50;
+        }
+        h3 {
+            color: #007bff;
         }
         p {
             font-size: 1.1rem;
@@ -46,6 +50,7 @@
             text-decoration: none;
             text-align: center;
             padding: 10px 20px;
+            margin: 5px;
         }
         .btn-secondary:hover {
             background-color: #5a6268;
@@ -59,32 +64,30 @@
             text-decoration: none;
             text-align: center;
             padding: 10px 20px;
+            margin: 5px;
         }
         .btn-primary:hover {
             background-color: #0056b3;
         }
-        .patient-image {
-            max-width: 150px;
-            max-height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
+        .detail-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="detail-container">
-        <h2>Detalle del Paciente</h2>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <img th:src="@{/usuario_foto/(${paciente.urlImagen})}" class="patient-image" alt="Imagen del Paciente">
-                <h3 th:text="${paciente.nombre}">Nombre del Paciente</h3>
-                <p><strong>Correo:</strong> <span th:text="${paciente.correo}"></span></p>
-                <p><strong>Celular:</strong> <span th:text="${paciente.celular}"></span></p>
-                <p><strong>DNI:</strong> <span th:text="${paciente.dni}"></span></p>
-                <a href="/menu_paciente" class="btn btn-secondary mt-3">Regresar</a>
-                <a th:href="@{/editar_paciente/{id}(id=${paciente.id})}" class="btn btn-primary mt-3">Editar</a>
+        <h2 class="text-center">Detalle del Paciente</h2>
+        <div class="detail-content">
+            <h3 th:text="${paciente.nombre}">Nombre del Paciente</h3>
+            <p><strong>Correo:</strong> <span th:text="${paciente.correo}"></span></p>
+            <p><strong>Celular:</strong> <span th:text="${paciente.celular}"></span></p>
+            <p><strong>DNI:</strong> <span th:text="${paciente.dni}"></span></p>
+            <div>
+                <a href="/menu_paciente" class="btn btn-secondary">Regresar</a>
+                <a th:href="@{/editar_paciente/{id}(id=${paciente.id})}" class="btn btn-primary">Editar</a>
             </div>
         </div>
     </div>

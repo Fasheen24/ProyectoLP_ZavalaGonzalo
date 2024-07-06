@@ -49,9 +49,6 @@
             margin-top: 50px;
             text-align: right;
         }
-        .signature img {
-            height: 100px;
-        }
         .footer {
             text-align: center;
             margin-top: 20px;
@@ -62,10 +59,10 @@
 </head>
 <body>
 <header>
-    <img src="https://campusvirtualperu.com/wp-content/uploads/2023/11/logo_cibertec_fondo_blanco_low.jpg" alt="Company Logo">
+    <img src="https://example.com/logo_clinica.jpg" alt="Company Logo"> <!-- Reemplaza con el logo de la clínica -->
     <div class="company-info">
-        <h2>Cibertec</h2>
-        <p>Av. Lima 1234<br>Lima, Perú<br>+51 123 456 789</p>
+        <h2>Clínica Dental Prime</h2>
+        <p>Av. Salud 1234<br>Lima, Perú<br>+51 123 456 789</p>
     </div>
 </header>
 
@@ -85,13 +82,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="ped : ${factura}">
-        <td th:text="${ped.productoEntity.productoId}"></td>
-        <td><img width="50px" height="50px" th:src="${ped.productoEntity.urlImagen}" alt=""></td>
-        <td th:text="${ped.productoEntity.nombre}"></td>
-        <td th:text="${ped.cantidad}"></td>
-        <td th:text="'S/' + ${ped.productoEntity.precio}"></td>
-        <td th:text="'S/' + ${ped.cantidad * ped.productoEntity.precio}"></td>
+    <tr th:each="med : ${factura}">
+        <td th:text="${med.productoEntity.productoId}"></td>
+        <td><img width="50px" height="50px" th:src="${med.productoEntity.urlImagen}" alt="Imagen del Producto"></td>
+        <td th:text="${med.productoEntity.nombre}"></td>
+        <td th:text="${med.cantidad}"></td>
+        <td th:text="'S/' + ${med.productoEntity.precio}"></td>
+        <td th:text="'S/' + ${med.cantidad * med.productoEntity.precio}"></td>
     </tr>
     </tbody>
 </table>
@@ -106,7 +103,7 @@
 </div>
 
 <div class="footer">
-    <p>CIBERTEC SAC.<br>RUC: 12345678910<br>www.cibertec.edu.pe</p>
+    <p>CLÍNICA DENTAL PRIME SAC.<br>RUC: 12345678910<br>www.clinicadentalprime.pe</p>
 </div>
 </body>
 </html>

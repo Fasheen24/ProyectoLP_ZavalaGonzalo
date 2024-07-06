@@ -80,58 +80,57 @@ public class ProductoController {
     }
 
     @PostMapping("/agregar_producto")
-	public String agregarProducto(HttpSession session,@RequestParam("prodId") String prod,
-			@RequestParam("cant") String cant) {
-		
-		List<Pedido> productos = null;
-		if(session.getAttribute("carrito") == null) {
-			productos = new ArrayList<>();
-		}else {
-			productos = (List<Pedido>) session.getAttribute("carrito");
-		}
-		
-		Integer cantidad = Integer.parseInt(cant);
-		Integer prodId = Integer.parseInt(prod);
-		Pedido pedido = new Pedido(cantidad, prodId);
-		productos.add(pedido);
-		session.setAttribute("carrito", productos);
-		return "redirect:/menu_producto";
-		
-	}
+    public String agregarProducto(HttpSession session, @RequestParam("prodId") String prod, @RequestParam("cant") String cant) {
+        List<Pedido> productos = null;
+        if (session.getAttribute("carrito") == null) {
+            productos = new ArrayList<>();
+        } else {
+            productos = (List<Pedido>) session.getAttribute("carrito");
+        }
+
+        Integer cantidad = Integer.parseInt(cant);
+        Integer prodId = Integer.parseInt(prod);
+        Pedido pedido = new Pedido(cantidad, prodId);
+        productos.add(pedido);
+        session.setAttribute("carrito", productos);
+        return "redirect:/menu_producto";
+    }
+
     @GetMapping("/generar_pdf")
-	public ResponseEntity<InputStreamResource>generarPdf(HttpSession session) throws IOException{
-		List<Pedido>productoSession = null;
-		if(session.getAttribute("carrito") == null) {
-			productoSession = new ArrayList<Pedido>();
-		}else {
-			productoSession = (List<Pedido>) session.getAttribute("carrito");
-		}
-		List<DetallePedidoEntity> detallePedidoEntityList = new ArrayList<DetallePedidoEntity>();
-		Double total = 0.0;
-		
-		for(Pedido pedido: productoSession) {
-			DetallePedidoEntity detallePedidoEntity = new DetallePedidoEntity();
-			ProductoEntity productoEntity = productoService.buscarProductoPorId(pedido.getProductoId());
-			detallePedidoEntity.setProductoEntity(productoEntity);
-			detallePedidoEntity.setCantidad(pedido.getCantidad());
-			detallePedidoEntityList.add(detallePedidoEntity);
-			total += pedido.getCantidad() * productoEntity.getPrecio();
-		}
-		
-		Map<String, Object>datosPdf = new HashMap<String, Object>();
-		datosPdf.put("factura", detallePedidoEntityList);
-		datosPdf.put("precio_total", total);
-		
-		ByteArrayInputStream pdfBytes = pdfService.generarPdfDeHtml("template_pdf", datosPdf);
-		
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add("Content-Disposition", "inline; filename=productos.pdf");
-		
-		return ResponseEntity.ok()
-				.headers(httpHeaders)
-				.contentType(MediaType.APPLICATION_PDF)
-				.body(new InputStreamResource(pdfBytes));
-	}
+    public ResponseEntity<InputStreamResource> generarPdf(HttpSession session) throws IOException {
+        List<Pedido> productoSession = null;
+        if (session.getAttribute("carrito") == null) {
+            productoSession = new ArrayList<Pedido>();
+        } else {
+            productoSession = (List<Pedido>) session.getAttribute("carrito");
+        }
+        List<DetallePedidoEntity> detallePedidoEntityList = new ArrayList<DetallePedidoEntity>();
+        Double total = 0.0;
+
+        for (Pedido pedido : productoSession) {
+            DetallePedidoEntity detallePedidoEntity = new DetallePedidoEntity();
+            ProductoEntity productoEntity = productoService.buscarProductoPorId(pedido.getProductoId());
+            detallePedidoEntity.setProductoEntity(productoEntity);
+            detallePedidoEntity.setCantidad(pedido.getCantidad());
+            detallePedidoEntityList.add(detallePedidoEntity);
+            total += pedido.getCantidad() * productoEntity.getPrecio();
+        }
+
+        Map<String, Object> datosPdf = new HashMap<String, Object>();
+        datosPdf.put("factura", detallePedidoEntityList);
+        datosPdf.put("precio_total", total);
+
+        ByteArrayInputStream pdfBytes = pdfService.generarPdfDeHtml("template_pdf", datosPdf);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Disposition", "inline; filename=medicamento.pdf");
+
+        return ResponseEntity.ok()
+                .headers(httpHeaders)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(pdfBytes));
+    }
+
     @GetMapping("/registrar_producto")
 	public String showAgregarProducto(Model model) {
 		model.addAttribute("producto",new ProductoEntity());

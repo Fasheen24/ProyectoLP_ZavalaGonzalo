@@ -92,7 +92,8 @@
                     </form>
                     <div class="d-flex justify-content-between mt-3">
                         <a class="btn btn-sm btn-primary" th:href="@{/editar_producto/{id}(id=${producto.productoId})}">Editar</a>
-                        <a class="btn btn-sm btn-danger" th:href="@{/eliminar_producto/{id}(id=${producto.productoId})}">Eliminar</a>
+                        <a th:href="@{/eliminar_producto/{id}(id=${producto.productoId})}" class="action-button delete" 
+                               onclick="return confirm('¿Está seguro de que desea eliminar este producto?');">Eliminar</a>
                         <a class="btn btn-sm btn-info" th:href="@{/buscarproducto/{id}(id=${producto.productoId})}">Detalle</a>
                     </div>
                 </div>
