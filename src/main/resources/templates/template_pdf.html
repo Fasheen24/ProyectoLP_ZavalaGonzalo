@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        header img {
+            height: 50px;
+        }
+        header .company-info {
+            text-align: right;
+        }
+        .date {
+            text-align: right;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #000;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .subtotal {
+            text-align: right;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .signature {
+            margin-top: 50px;
+            text-align: right;
+        }
+        .signature img {
+            height: 100px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <img src="https://campusvirtualperu.com/wp-content/uploads/2023/11/logo_cibertec_fondo_blanco_low.jpg" alt="Company Logo">
+    <div class="company-info">
+        <h2>Cibertec</h2>
+        <p>Av. Lima 1234<br>Lima, Perú<br>+51 123 456 789</p>
+    </div>
+</header>
+
+<div class="date">
+    <p th:text="${#dates.format(new java.util.Date(), 'dd/MM/yyyy')}">19/06/2024</p>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ped : ${factura}">
+        <td th:text="${ped.productoEntity.productoId}"></td>
+        <td><img width="50px" height="50px" th:src="${ped.productoEntity.urlImagen}" alt=""></td>
+        <td th:text="${ped.productoEntity.nombre}"></td>
+        <td th:text="${ped.cantidad}"></td>
+        <td th:text="'S/' + ${ped.productoEntity.precio}"></td>
+        <td th:text="'S/' + ${ped.cantidad * ped.productoEntity.precio}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="subtotal">
+    <p>Total: <span th:text="'S/' + ${precio_total}"></span></p>
+</div>
+
+<div class="signature">
+    <p>_________________________</p>
+    <p>Firma Autorizada</p>
+</div>
+
+<div class="footer">
+    <p>CIBERTEC SAC.<br>RUC: 12345678910<br>www.cibertec.edu.pe</p>
+</div>
+</body>
+</html>
