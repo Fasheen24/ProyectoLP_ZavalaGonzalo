@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.DetallePedidoEntity;
 import com.example.demo.entity.ProductoEntity;
@@ -138,8 +139,8 @@ public class ProductoController {
 		return "registrarproducto";
 	}
 	@PostMapping("/registrar_producto")
-	public String registrarProducto(ProductoEntity productoEntity) {
-		productoService.registrarProducto(productoEntity);
+	public String registrarProducto(ProductoEntity productoEntity,Model model, @RequestParam("foto") MultipartFile foto) {
+		productoService.registrarProducto(productoEntity,model,foto);
 		return "redirect:/menu_producto";
 	}
 	
@@ -151,15 +152,15 @@ public class ProductoController {
 		return "editar_producto";
 	}
 	@PostMapping("/editar_producto")
-	public String editarEmpleado( Model model, ProductoEntity productoEntity ) {
-		productoService.editarProducto(productoEntity);
+	public String editarproducto( Model model, ProductoEntity productoEntity,@RequestParam("foto") MultipartFile foto ) {
+		productoService.editarProducto(productoEntity, foto, model);
 		return "redirect:/menu_producto";
 	}
-	@GetMapping("/buscar/{id}")
+	@GetMapping("/buscarproducto/{id}")
 	public String buscarPorId(@PathVariable("id") Integer id, Model model) {
 		ProductoEntity productoEcontraEntity = productoService.buscarProductoPorId(id);
 		model.addAttribute("producto", productoEcontraEntity);
-		return "buscar";
+		return "buscarproducto";
 	}
 	@GetMapping("/eliminar_producto/{id}")
 	public String eliminarProducto(@PathVariable("id") Integer id, Model model) {

@@ -35,12 +35,15 @@
         .card {
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Centrar el contenido de la tarjeta */
         }
         .card-img-top {
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
-            object-fit: cover;
-            height: 200px;
+            object-fit: contain; /* Mantener las proporciones de la imagen */
+            width: 100%; /* Hacer que la imagen ocupe todo el ancho de la tarjeta */
+            height: 200px; /* Altura fija para todas las imágenes */
+            background-color: #f8f9fa; /* Fondo gris claro para imágenes más pequeñas */
         }
         .modal-lg {
             max-width: 90%;
@@ -49,20 +52,17 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" th:href="@{/menu}">Productos</a>
+    <a class="navbar-brand" th:href="@{/menu}">Medicinas</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <img th:src="${'/usuario_foto/' + foto}" alt="Profile" class="profile-pic ml-2">
+                <a class="btn btn-outline-primary ml-2" th:href="@{/menu_principal}" role="button">Regresar</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-outline-danger ml-2" th:href="@{/logout}" role="button">Logout</a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-outline-primary ml-2" th:href="@{/registrar_producto}" role="button">Registrar Producto</a>
+                <a class="btn btn-outline-primary ml-2" th:href="@{/registrar_producto}" role="button">Registrar Medicina</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-link cart-icon" data-toggle="modal" data-target="#exampleModal">
@@ -78,7 +78,7 @@
     <div class="row mt-5">
         <div class="col-lg-4 col-md-6 mb-4" th:each="producto: ${productos}">
             <div class="card">
-                <img th:src="${producto.urlImagen}" class="card-img-top" alt="Product Image">
+                <img th:src="@{/usuario_foto/{filename}(filename=${producto.urlImagen})}" class="card-img-top" alt="Current Image">
                 <div class="card-body">
                     <form th:action="@{/agregar_producto}" th:object="${pedido}" method="post">
                         <h5 class="card-title" th:text="${producto.nombre}"></h5>
@@ -93,7 +93,7 @@
                     <div class="d-flex justify-content-between mt-3">
                         <a class="btn btn-sm btn-primary" th:href="@{/editar_producto/{id}(id=${producto.productoId})}">Editar</a>
                         <a class="btn btn-sm btn-danger" th:href="@{/eliminar_producto/{id}(id=${producto.productoId})}">Eliminar</a>
-                        <a class="btn btn-sm btn-info" th:href="@{/buscar/{id}(id=${producto.productoId})}">Detalle</a>
+                        <a class="btn btn-sm btn-info" th:href="@{/buscarproducto/{id}(id=${producto.productoId})}">Detalle</a>
                     </div>
                 </div>
             </div>

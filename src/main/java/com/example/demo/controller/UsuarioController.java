@@ -23,8 +23,7 @@ public class UsuarioController {
 		return "registrar_usuario";
 	}
 	@PostMapping("/registrar")
-	public String registrarUsuario(UsuarioEntity usuarioEntity, Model model 
-			) {
+	public String registrarUsuario(UsuarioEntity usuarioEntity, Model model ) {
 		
 		usuarioService.crearUsuario(usuarioEntity, model);
 		

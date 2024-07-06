@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,18 +24,22 @@ public class PacienteController {
 	private UsuarioService usuarioService;
 	@Autowired
 	private PacienteService pacienteService;
-	@GetMapping("/menu")
+	
+	
+	
+	@GetMapping("/menu_paciente")
 	public String showMenu(HttpSession session, Model model) {
 		 if (session.getAttribute("usuario") == null) {
-	            return "redirect:/";
+	            return "redirect:/menu_paciente";
 	        }
 
 	        String correo = session.getAttribute("usuario").toString();
 	        UsuarioEntity usuarioEntity = usuarioService.buscarUsuarioPorCorreo(correo);
+	        
 
 	        List<PacienteEntity> pacientes = pacienteService.buscarTodosPacientes();
-	        model.addAttribute("paciente", pacientes);
-	        return "menu";
+	        model.addAttribute("menupaciente", pacientes);
+	        return "menupaciente";
 	}
 	
 
@@ -45,10 +50,34 @@ public class PacienteController {
 		return "registrarpaciente";
 	}
 	@PostMapping("/registrar_paciente")
-	public String registrarProducto(PacienteEntity pacienteEntity) {
+	public String registrarPaciente(PacienteEntity pacienteEntity) {
 		pacienteService.registrarPaciente(pacienteEntity);
-		return "redirect:/menu";
+		return "redirect:/menu_paciente";
 	}
 	
+	@GetMapping("/editar_paciente/{id}")
+	public String showEditarPaciente(@PathVariable("id") Long id, Model model ) {
+		PacienteEntity pacientebusacrEntity = pacienteService.buscarPacienteporId(id);
+		model.addAttribute("paciente", pacientebusacrEntity);
+		return "editar_paciente";
+	}
+	@PostMapping("/editar_paciente")
+	public String editarEmpleado( Model model, PacienteEntity pacienteEntity ) {
+		pacienteService.editarPaciente(pacienteEntity);
+		return "redirect:/menu_paciente";
+	}
+	
+	@GetMapping("/buscar_paciente/{id}")
+	public String buscarPorId(@PathVariable("id") Long id, Model model) {
+		PacienteEntity pacienteencotradoEntity = pacienteService.buscarPacienteporId(id);
+		model.addAttribute("paciente", pacienteencotradoEntity);
+		return "buscarpaciente";
+	}
+	
+	@GetMapping("/eliminar_paciente/{id}")
+	public String eliminarProducto(@PathVariable("id") Long id, Model model) {
+		pacienteService.eliminarPaciente(id);
+        return "redirect:/menu_paciente";
+    }
 
 }

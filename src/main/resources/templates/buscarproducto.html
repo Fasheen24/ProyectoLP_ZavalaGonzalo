@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Detalle del Producto</title>
+    <title>Detalle de la Medicina</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -9,14 +9,14 @@
     <h2>Detalle del Producto</h2>
     <div class="row">
         <div class="col-md-6">
-            <img th:src="@{${producto.urlImagen}}" class="img-fluid" alt="Imagen del Producto">
+            <img th:src="@{/usuario_foto/{filename}(filename=${producto.urlImagen})}" class="mt-3" style="max-width: 200px;" alt="Imagen del Producto">
         </div>
         <div class="col-md-6">
-            <h3 th:text="${producto.nombre}">Nombre del Producto</h3>
+            <h3 th:text="${producto.nombre}">Nombre de la Medicina</h3>
             <p><strong>Precio:</strong> S/<span th:text="${producto.precio}"></span></p>
             <p><strong>Cantidad en Stock:</strong> <span th:text="${producto.stock}"></span> unidades</p>
             <p><strong>Categoría:</strong> <span th:text="${producto.categoria.nomcate}"></span></p>
-            <a href="/menu" class="btn btn-secondary mt-3">Regresar</a>
+            <a href="/menu_producto" class="btn btn-secondary mt-3">Regresar</a>
         </div>
     </div>
 </div>
