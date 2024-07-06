@@ -102,7 +102,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
+                        <th>Nombre y Apellido</th>
                         <th>Celular</th>
                         <th>DNI</th>
                         <th>Número de Historia</th>
@@ -112,7 +112,7 @@
                 <tbody>
                     <!-- Iterar sobre la lista de pacientes -->
                     <tr th:each="paciente : ${menupaciente}">
-                        <td><a th:href="@{/buscar_paciente/{id}(id=${paciente.id})}" th:text="${paciente.nombre}">Nombre</a></td>
+                        <td><a th:href="@{/buscar_paciente/{id}(id=${paciente.id})}" th:text="${paciente.nombre}">Nombre </a></td>
                         <td th:text="${paciente.celular}">Celular</td>
                         <td th:text="${paciente.dni}">DNI</td>
                         <td th:text="${paciente.nroHistoria}">Número de Historia</td>
