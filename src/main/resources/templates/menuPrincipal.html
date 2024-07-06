@@ -8,10 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('URL_DE_TU_IMAGEN_DE_FONDO');
+            background-image: url('https://images.pexels.com/photos/7787980/pexels-photo-7787980.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
         }
         .modal-lg {
             max-width: 90%;
@@ -35,11 +37,20 @@
         .card-text {
             margin-bottom: 20px;
         }
+        .container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .row {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(227, 242, 253, 0.9);">
-    <a class="navbar-brand" th:href="@{/menu_principal}">Clínica Dental</a>
+    <a class="navbar-brand" th:href="@{/menu_principal}">Clínica Dental "Dental Prime"</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,7 +63,7 @@
     </div>
 </nav>
 
-<div class="container mt-5">
+<div class="container">
     <div class="row">
         <div class="col-lg-6">
             <div class="card">

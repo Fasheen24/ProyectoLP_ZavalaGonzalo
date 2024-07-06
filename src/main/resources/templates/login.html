@@ -8,13 +8,34 @@
     .card {
       max-width: 400px;
       border-radius: 10px;
+      background: rgba(255, 255, 255, 0.8);
     }
     .bg-light {
-      background-image: url('https://images.unsplash.com/photo-1486049125644-f35e226a5e14?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D.jpg'); /* Example background image */
+      background-image: url('https://images.unsplash.com/photo-1486049125644-f35e226a5e14?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D.jpg');
       background-size: cover;
+      background-repeat: no-repeat;
     }
     .card-title {
-      color: #007bff; /* Custom color for dental clinic */
+      color: #007bff;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+    }
+    .btn-link {
+      color: #007bff;
+    }
+    .btn-link:hover {
+      text-decoration: none;
+      color: #0056b3;
+    }
+    .alert {
+      font-size: 0.875rem;
     }
   </style>
 </head>
@@ -23,7 +44,8 @@
   <div th:if="${loginInvalido}" class="alert alert-danger" role="alert">
     <span th:text="${loginInvalido}"></span>
   </div>
-  <h2 class="card-title text-center mb-4">Inicio de Sesión Clínica Dental</h2>
+  <h2 class="card-title text-center mb-4">Inicio de Sesión</h2>
+  <h3 class="text-center mb-4">Dental Prime</h3>
   <form th:action="@{/login}" method="post" th:object="${usuario}">
     <div class="form-group">
       <label for="correo">Correo Electrónico</label>
